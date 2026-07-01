@@ -1,0 +1,114 @@
+[
+  {
+    "id": "direct_01",
+    "category": "direct",
+    "question": "What is BERT?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "Bidirectional Encoder Representations from Transformers",
+      "transformer",
+      "context"
+    ],
+    "notes": "The answer should be supported by the BERT course material."
+  },
+  {
+    "id": "direct_02",
+    "category": "direct",
+    "question": "What are some applications of BERT?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "question answering",
+      "sentiment analysis",
+      "text classification"
+    ],
+    "notes": "At least two valid applications should appear."
+  },
+  {
+    "id": "direct_03",
+    "category": "direct",
+    "question": "What is supervised learning?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "labeled data",
+      "input",
+      "output"
+    ],
+    "notes": "Use this only if supervised learning is explicitly covered in the uploaded documents."
+  },
+{
+  "id": "direct_04",
+  "category": "direct",
+  "question": "What is an LLM?",
+  "expected_behavior": "answer",
+  "expected_terms": [
+    "large language model",
+    "language",
+    "text"
+  ],
+  "notes": "The response should explain that an LLM is a large language model trained to understand or generate text."
+},
+  {
+    "id": "direct_05",
+    "category": "direct",
+    "question": "What type of transformer architecture does BERT use?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "encoder",
+      "encoder-only"
+    ],
+    "notes": "The answer should identify BERT as encoder-only."
+  },
+  {
+    "id": "comparison_01",
+    "category": "multi_chunk",
+    "question": "What is the difference between BART and BERT?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "encoder-only",
+      "encoder-decoder",
+      "denoising"
+    ],
+    "notes": "This should use the explicit BART versus BERT comparison document."
+  },
+  {
+    "id": "comparison_02",
+    "category": "multi_chunk",
+    "question": "Compare the architecture and training objectives of BART and BERT.",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "encoder",
+      "decoder",
+      "masked language",
+      "denoising"
+    ],
+    "notes": "This may require evidence from more than one chunk."
+  },
+  {
+    "id": "comparison_03",
+    "category": "multi_chunk",
+    "question": "How is BART related to BERT?",
+    "expected_behavior": "answer",
+    "expected_terms": [
+      "bidirectional",
+      "autoregressive",
+      "encoder"
+    ],
+    "notes": "The response should explain the architectural relationship."
+  },
+  {
+    "id": "unsupported_01",
+    "category": "unsupported",
+    "question": "What is the current NVIDIA stock price?",
+    "expected_behavior": "refuse",
+    "expected_terms": [],
+    "notes": "The system must not use external or current information."
+  },
+  {
+    "id": "unsupported_02",
+    "category": "unsupported",
+    "question": "Who won the most recent FIFA World Cup?",
+    "expected_behavior": "refuse",
+    "expected_terms": [],
+    "notes": "The system should return the no-reliable-answer response."
+  }
+]

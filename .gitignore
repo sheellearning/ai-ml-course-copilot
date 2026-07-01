@@ -1,0 +1,40 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# Environment variables and API keys
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Course uploaded documents
+data/uploads/*
+!data/uploads/README.md
+
+# Generated FAISS index and records
+data/index/*
+!data/index/README.md
+*.index
+*.pkl
+
+# Usage logs and application metrics
+data/metrics/*
+!data/metrics/README.md
+
+# Generated evaluation output
+evaluation_results.json
+
+# Local package inventory
+installed_packages.txt
+
+# Operating system files
+Thumbs.db
+.DS_Store
+desktop.ini
+

@@ -23,14 +23,14 @@ The system supports multiple document formats and combines FAISS retrieval, cros
 
 - Multi-format document ingestion
 - Recursive folder scanning
-- Document-specific chunking strategies
+- Document specific chunking strategies
 - Local SentenceTransformer embeddings
 - FAISS semantic vector search
 - Cross-encoder reranking
-- Confidence-based answer or refusal decisions
-- Document-grounded OpenAI responses
-- Source-reference display
-- Supporting-evidence inspection
+- Confidence based answer or refusal decisions
+- Document grounded OpenAI responses
+- Source & reference display
+- Supporting evidence inspection
 - Streamlit chat interface
 - Separate monitoring dashboard
 - Local JSONL usage logging

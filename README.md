@@ -1,86 +1,109 @@
-# AI/ML Course Copilot
+# 🤖 AI/ML Course Copilot
+
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.36.0-FF4B4B?logo=streamlit&logoColor=white)
+![FAISS](https://img.shields.io/badge/Vector%20Search-FAISS-0467DF)
+![OpenAI](https://img.shields.io/badge/LLM-gpt--4o--mini-412991?logo=openai&logoColor=white)
+![Evaluation](https://img.shields.io/badge/Fixed%20Evaluation%20Set-10%2F10-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 AI/ML Course Copilot is a document-grounded Retrieval-Augmented Generation (RAG) application that answers questions using indexed AI and machine-learning course materials.
 
-I built this project to strengthen and demonstrate my understanding of the complete RAG workflow, including document ingestion, text chunking, embeddings, vector search, reranking, confidence-based answer control, grounded response generation, evaluation, and usage monitoring.
+I created this project to demonstrate how an end-to-end RAG system can be designed, implemented, evaluated, and monitored through a transparent and testable retrieval pipeline.
 
-The application supports multiple document formats and provides source references and supporting passages with each answer.
+The system supports multiple document formats and combines FAISS retrieval, cross-encoder reranking, confidence-based refusal, grounded OpenAI responses, source attribution, and usage monitoring.
 
-## Key Features
+<!--
+## 🎥 Demo Video
 
-* Multi-format document ingestion
-* Recursive folder scanning
-* Document-specific chunking strategies
-* Local sentence-transformer embeddings
-* FAISS vector search
-* Cross-encoder reranking
-* Confidence-based answer or refusal decision
-* Document-grounded OpenAI responses
-* Source and supporting-evidence display
-* Streamlit chat interface
-* Separate admin monitoring dashboard
-* JSONL usage logging
-* Repeatable evaluation suite
-* Automated tests using temporary sample files
+[▶ Watch the Project Demo](VIDEO_URL_HERE)
+-->
+
+## ✨ Key Features
+
+- Multi-format document ingestion
+- Recursive folder scanning
+- Document-specific chunking strategies
+- Local SentenceTransformer embeddings
+- FAISS semantic vector search
+- Cross-encoder reranking
+- Confidence-based answer or refusal decisions
+- Document-grounded OpenAI responses
+- Source-reference display
+- Supporting-evidence inspection
+- Streamlit chat interface
+- Separate monitoring dashboard
+- Local JSONL usage logging
+- Repeatable evaluation suite
+- Self-contained tests using temporary sample files
+
+## 📸 Application Preview
+
+### Grounded Answer with Sources and Evidence
+
+The application retrieves relevant document passages, generates an answer using the retrieved context, and displays the supporting sources and evidence.
+
+![Grounded BERT answer with sources and supporting evidence](images/app-grounded-answer.jpg)
+
+### Multi-Passage Comparison
+
+The retrieval pipeline can combine information from multiple retrieved passages to answer comparison questions.
+
+![BART and BERT comparison answer](images/app-comparison-answer.jpg)
+
+### Confidence-Based Refusal
+
+When the indexed documents do not provide sufficient evidence, the system refuses to generate an unsupported answer.
+
+![Unsupported current-information question refusal](images/app-refusal.jpg)
+
+### Monitoring Dashboard
+
+The dashboard provides visibility into request volume, answer success rate, refusals, frequently asked questions, recent activity, and retrieval scores.
+
+![RAG system monitoring dashboard](images/admin-dashboard.jpg)
 
 ## Supported File Formats
 
 The ingestion pipeline currently supports:
 
-* PDF
-* DOCX
-* PPTX
-* IPYNB
-* JPG, JPEG, and PNG
-* XLSX, XLS, and CSV
+- PDF
+- DOCX
+- PPTX
+- IPYNB
+- JPG, JPEG, and PNG
+- XLSX, XLS, and CSV
 
 Image files are processed using Tesseract OCR.
 
-## RAG Architecture
+## 🏗️ RAG Architecture
 
-```text
-Source Documents
-       |
-       v
-Document Loaders
-       |
-       v
-Document-Specific Chunking
-       |
-       v
-SentenceTransformer Embeddings
-       |
-       v
-FAISS Vector Index
-       |
-       v
-User Question
-       |
-       v
-FAISS Candidate Retrieval
-       |
-       v
-Cross-Encoder Reranking
-       |
-       v
-Confidence Gate
-       |
-       +---- Weak Evidence ----> Refusal
-       |
-       v
-Grounded Prompt
-       |
-       v
-OpenAI Answer
-       |
-       v
-Sources and Supporting Evidence
+```mermaid
+flowchart TD
+    A[Source Documents] --> B[Document Loaders]
+    B --> C[Document-Specific Chunking]
+    C --> D[SentenceTransformer Embeddings]
+    D --> E[FAISS Vector Index]
+
+    F[User Question] --> G[Question Embedding]
+    G --> H[FAISS Top 30 Candidates]
+    E --> H
+
+    H --> I[Cross-Encoder Reranking]
+    I --> J[Top 5 Passages]
+    J --> K{Confidence Gate}
+
+    K -->|Weak evidence| L[Refusal]
+    K -->|Sufficient evidence| M[Grounded Prompt]
+    M --> N[OpenAI Answer]
+    N --> O[Answer, Sources, and Evidence]
 ```
 
 The runtime retrieval flow is:
 
 ```text
 Question
+→ Question embedding
 → FAISS top 30 candidates
 → Cross-encoder reranking
 → Top 5 passages
@@ -88,24 +111,27 @@ Question
 → Grounded answer or refusal
 ```
 
-## Models and Technologies
+The confidence gate considers both the FAISS similarity score and the cross-encoder reranking score before allowing answer generation.
 
-* Python 3.11
-* Streamlit
-* OpenAI `gpt-4o-mini`
-* SentenceTransformers `all-MiniLM-L6-v2`
-* Cross-encoder `ms-marco-MiniLM-L-6-v2`
-* FAISS `IndexFlatIP`
-* LangChain OpenAI integration
-* LangChain recursive text splitter
-* PyMuPDF
-* python-docx
-* python-pptx
-* nbformat
-* pandas
-* Tesseract OCR
+## 🧰 Models and Technologies
 
-I used LangChain selectively for OpenAI model integration and recursive text splitting. I implemented retrieval, reranking, confidence gating, source handling, and evaluation directly so that I could retain greater control over the pipeline and clearly understand each stage.
+| Component | Technology | Purpose |
+|---|---|---|
+| Application interface | Streamlit | Chat interface and monitoring dashboard |
+| Language model | OpenAI `gpt-4o-mini` | Grounded answer generation |
+| Embedding model | `all-MiniLM-L6-v2` | Question and document embeddings |
+| Reranker | `ms-marco-MiniLM-L-6-v2` | Candidate-passage reranking |
+| Vector search | FAISS `IndexFlatIP` | Semantic similarity retrieval |
+| Text splitting | LangChain recursive text splitter | Document chunking |
+| PDF processing | PyMuPDF | PDF text extraction |
+| Word processing | python-docx | DOCX text extraction |
+| Presentation processing | python-pptx | PPTX text extraction |
+| Notebook processing | nbformat | IPYNB content extraction |
+| Spreadsheet processing | pandas, openpyxl, xlrd | Spreadsheet ingestion |
+| Image processing | Tesseract OCR, Pillow | Text extraction from images |
+| Monitoring | JSONL logging | Local request and outcome tracking |
+
+I used LangChain selectively for OpenAI integration and recursive text splitting. I implemented retrieval, reranking, confidence gating, source handling, and evaluation directly so that I could maintain greater control over the pipeline and understand each processing stage.
 
 ## Project Structure
 
@@ -139,6 +165,13 @@ ai-ml-course-copilot/
 │   └── metrics/
 │       └── README.md
 │
+├── images/
+│   ├── admin-dashboard.png
+│   ├── app-comparison-answer.png
+│   ├── app-grounded-answer.png
+│   ├── app-refusal.png
+│   └── app-simple-answer.png
+│
 ├── scripts/
 │   └── check_openai_connection.py
 │
@@ -161,10 +194,11 @@ ai-ml-course-copilot/
 ├── evaluation_questions.json
 ├── requirements.txt
 ├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
-Private documents, generated FAISS files, usage logs, local environment files, and detailed evaluation output are excluded from Git tracking.
+Private documents, generated FAISS files, usage logs, environment files, and detailed evaluation output are excluded from Git tracking.
 
 ## Installation
 
@@ -300,14 +334,14 @@ streamlit run app.py
 
 The application allows users to:
 
-* Ask questions about indexed documents
-* Receive document-grounded answers
-* View source files
-* Inspect supporting passages
-* Receive a refusal when retrieved evidence is insufficient
-* Clear the current conversation
+- Ask questions about indexed documents
+- Receive document-grounded answers
+- View source references
+- Inspect supporting passages
+- Receive a refusal when retrieved evidence is insufficient
+- Clear the current conversation
 
-## Run the Admin Dashboard
+## Run the Monitoring Dashboard
 
 ```bash
 streamlit run admin_dashboard.py
@@ -315,11 +349,12 @@ streamlit run admin_dashboard.py
 
 The dashboard displays:
 
-* Total requests
-* Success rate
-* No-answer count
-* Frequently asked questions
-* Recent request logs
+- Total requests
+- Success rate
+- No-answer count
+- Frequently asked questions
+- Recent request activity
+- Retrieval scores
 
 Usage logs are stored locally in:
 
@@ -349,7 +384,7 @@ The tests use temporary sample files and do not require access to private course
 
 The RAG pipeline test uses a fake language-model object and does not make a paid OpenAI API request.
 
-## Evaluation
+## 🧪 Evaluation
 
 Run the evaluation suite with:
 
@@ -359,20 +394,20 @@ python evaluate_rag.py
 
 The current evaluation dataset contains:
 
-* 5 direct-answer questions
-* 3 multi-chunk comparison questions
-* 2 unsupported questions
+- 5 direct-answer questions
+- 3 multi-chunk comparison questions
+- 2 unsupported questions
 
 Current baseline result:
 
-| Metric                            | Result |
-| --------------------------------- | -----: |
-| Total evaluation questions        |     10 |
-| Passed                            |     10 |
-| Failed                            |      0 |
-| Overall pass rate                 |   100% |
-| Supported-answer pass rate        |   100% |
-| Unsupported-question refusal rate |   100% |
+| Metric | Result |
+|---|---:|
+| Total evaluation questions | 10 |
+| Passed | 10 |
+| Failed | 0 |
+| Overall pass rate | 100% |
+| Supported-answer pass rate | 100% |
+| Unsupported-question refusal rate | 100% |
 
 The 100% result applies only to the current fixed 10-question evaluation set. It should not be interpreted as universal system accuracy.
 
@@ -386,62 +421,49 @@ evaluation_results.json
 
 This file is excluded from Git because it may contain source filenames, retrieved evidence, generated answers, and information derived from private documents.
 
-## Privacy and Security
+## 🔐 Privacy and Security
 
 The repository excludes:
 
-* OpenAI API keys
-* Environment-variable files
-* Private uploaded documents
-* Generated FAISS indexes
-* Serialized document records
-* Usage logs
-* Detailed evaluation output
-* Virtual-environment files
-* Python cache files
+- OpenAI API keys
+- Environment-variable files
+- Private uploaded documents
+- Generated FAISS indexes
+- Serialized document records
+- Usage logs
+- Detailed evaluation output
+- Virtual-environment files
+- Python cache files
 
 The OpenAI API key is loaded from the local environment and is never stored directly in the application code.
 
 ## Known Limitations
 
-* The FAISS index must be rebuilt after adding or changing documents.
-* OCR quality depends on image quality and the local Tesseract installation.
-* Spreadsheet ingestion is limited to the first 300 rows of each sheet.
-* The evaluation dataset is small and domain-specific.
-* Expected-term evaluation uses literal normalized matching rather than semantic scoring.
-* The admin dashboard does not currently include authentication.
-* Usage logs are stored locally rather than in a managed database.
-* The application currently uses a local index and is not configured for distributed deployment.
+- The FAISS index must be rebuilt after adding or changing documents.
+- OCR quality depends on image quality and the local Tesseract installation.
+- Spreadsheet ingestion is limited to the first 300 rows of each sheet.
+- The evaluation dataset is small and domain-specific.
+- Expected-term evaluation uses literal normalized matching rather than semantic scoring.
+- The monitoring dashboard does not currently include authentication.
+- Usage logs are stored locally rather than in a managed database.
+- The application currently uses a local index and is not configured for distributed deployment.
 
 ## Future Improvements
 
 Possible future enhancements include:
 
-* User-facing document upload interface
-* Incremental indexing for newly added files
-* Semantic evaluation metrics
-* Larger and more diverse evaluation datasets
-* Dashboard authentication
-* Centralized configuration for retrieval thresholds
-* Conversation-aware retrieval
-* Improved OCR preprocessing
-* Deployment with secure secret management
-* CI testing through GitHub Actions
+- User-facing document upload interface
+- Incremental indexing for newly added files
+- Semantic evaluation metrics
+- Larger and more diverse evaluation datasets
+- Monitoring-dashboard authentication
+- Centralized retrieval configuration
+- Conversation-aware retrieval
+- Improved OCR preprocessing
+- Secure cloud deployment
+- Query and API-cost controls
+- CI testing through GitHub Actions
 
-## What I Implemented
+## License
 
-In the current version, I implemented:
-
-* Multi-format document ingestion
-* Document-specific chunking
-* Local embeddings
-* FAISS retrieval
-* Cross-encoder reranking
-* Confidence-based refusal
-* Document-grounded answer generation
-* Streamlit user interface
-* Admin monitoring dashboard
-* Automated tests
-* A fixed RAG evaluation baseline
-
-I created this project to demonstrate my understanding of how an end-to-end RAG system can be designed, implemented, evaluated, and monitored through a transparent and testable retrieval pipeline.
+This project is licensed under the MIT License. See the `LICENSE` file for details.

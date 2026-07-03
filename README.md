@@ -7,7 +7,7 @@
 ![Evaluation](https://img.shields.io/badge/Fixed%20Evaluation%20Set-10%2F10-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-AI/ML Course Copilot is a document-grounded Retrieval-Augmented Generation (RAG) application that answers questions using indexed AI and machine-learning course materials.
+AI/ML Course Copilot is a document-grounded Retrieval-Augmented Generation (RAG) application that answers questions using indexed course materials on artificial intelligence and machine learning.
 
 I created this project to demonstrate how an end-to-end RAG system can be designed, implemented, evaluated, and monitored through a transparent and testable retrieval pipeline.
 

@@ -13,11 +13,9 @@ I created this project to demonstrate how an end-to-end RAG system can be design
 
 The system supports multiple document formats and combines FAISS retrieval, cross-encoder reranking, confidence-based refusal, grounded OpenAI responses, source attribution, and usage monitoring.
 
-<!--
 ## 🎥 Demo Video
 
-[▶ Watch the Project Demo](VIDEO_URL_HERE)
--->
+[▶ Watch the AI/ML Course Copilot Demo](https://www.loom.com/share/ba9c8d7e45bb445598d36dc8b52a29c7)
 
 ## ✨ Key Features
 
